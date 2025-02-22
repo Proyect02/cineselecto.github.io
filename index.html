@@ -61,12 +61,13 @@
 }
 
 /* Icono de WhatsApp en la parte superior derecha */
+/* Icono de WhatsApp en la parte superior derecha */
 .whatsapp-button {
     position: absolute;
     top: 10px;  /* Distancia desde la parte superior */
     right: 10px; /* Distancia desde la derecha */
-    width: 40px; /* Tamaño del icono */
-    height: 40px;
+    width: 50px; /* Tamaño más grande */
+    height: 50px;
     opacity: 1; /* Siempre visible */
     transition: transform 0.3s ease, opacity 0.3s ease;
     cursor: pointer;
@@ -79,7 +80,7 @@
         filter: drop-shadow(0 0 5px rgba(37, 211, 102, 0.5));
     }
     100% {
-        filter: drop-shadow(0 0 10px rgba(37, 211, 102, 1));
+        filter: drop-shadow(0 0 12px rgba(37, 211, 102, 1));
     }
 }
 
@@ -87,6 +88,7 @@
 .movie-card:hover .whatsapp-button {
     transform: scale(1.2);
 }
+
 
 
 /* ************************** */
