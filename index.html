@@ -9,8 +9,45 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-   
+/*style boton inicio*/
+        .boton-inicio {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #000307;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s;
+        }
         
+        .boton-inicio:hover {
+            background-color: #0056b3;
+        }
+        
+        .boton-inicio span {
+            margin-left: 8px;
+        }
+/*style boton inicio*/
+
+   
+   .fixed-search {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white; /* Ajusta el color según el diseño */
+    padding: 10px;
+    z-index: 1000; /* Asegura que esté sobre otros elementos */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Efecto sombra opcional */
+    }
+
         /* Footer */
         .footer {
             background-color: #343a40;
@@ -60,18 +97,42 @@
     overflow: hidden;
 }
 
-/* Icono de WhatsApp en la parte superior derecha */
+/*---------------------- whats app icono antes de mod-----------------------------------------*/
+/* Efecto de brillo y rebote */
+@keyframes rebote {
+    0% {
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 5px rgba(37, 211, 102, 0.8));
+    }
+    30% {
+        transform: translateY(-10px) scale(1.1);
+        filter: drop-shadow(0 0 20px rgba(37, 211, 102, 1));
+    }
+    50% {
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 10px rgba(37, 211, 102, 0.9));
+    }
+    70% {
+        transform: translateY(-5px) scale(1.05);
+        filter: drop-shadow(0 0 15px rgba(37, 211, 102, 1));
+    }
+    100% {
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 5px rgba(37, 211, 102, 0.8));
+    }
+}
+
 /* Icono de WhatsApp en la parte superior derecha */
 .whatsapp-button {
     position: absolute;
-    top: 10px;  /* Distancia desde la parte superior */
-    right: 10px; /* Distancia desde la derecha */
-    width: 50px; /* Tamaño más grande */
-    height: 50px;
-    opacity: 1; /* Siempre visible */
+    top: 10px;
+    right: 10px;
+    width: 55px; /* Tamaño del icono */
+    height: 55px;
+    opacity: 1;
     transition: transform 0.3s ease, opacity 0.3s ease;
     cursor: pointer;
-    animation: radiacion 1.5s infinite alternate; /* Animación de brillo */
+    animation: rebote 1.5s infinite ease-in-out; /* Se repite constantemente */
 }
 
 /* Efecto de radiación (brillo pulsante) */
@@ -125,7 +186,7 @@
     <!-- Menú Superior -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Películas y Series</a>
+            <a class="navbar-brand" href="#">Películas y Series a $10 PIDELAS dando 👉🏻 clic en el icono de WhatsApp</a>
             <input type="text" id="searchInput" class="form-control ms-auto" placeholder="Buscar película...">
         </div>
     </nav>
@@ -196,7 +257,7 @@
     <script>
         // Lista de películas simuladas con título, género, tipo, año, URL de imagen y descripción
         const movies = [
-             {
+            {
                 "title": "Emilia Pérez",
                 "genre": "Drama, Crimen",
                 "type": "Película",
@@ -205,6 +266,7 @@
                 "description": "Rita, una abogada infravalorada, es contratada para ayudar a un jefe de cartel a desaparecer y convertirse en la mujer que siempre quiso ser."
             },
             {
+                
                 title: "Avengers: Endgame",
                 genre: "Acción",
                 type: "Película",
@@ -300,6 +362,8 @@
             "imageUrl": "https://i.ibb.co/5X5LMktg/FAROL.jpg",
             "description": "Tras naufragar, una joven marinera es rescatada por un farero solitario, pero pronto descubre que algo siniestro acecha en la isla."
         }
+        
+
 
         ];
 
@@ -316,6 +380,7 @@
                             class="whatsapp-button" 
                             onclick="shareOnWhatsApp(event, '${movie.title}')"
                             alt="WhatsApp">
+                             <span class="whatsapp-text">Pídela</span>
                             <div class="card-body">
                                 <h5 class="card-title">${movie.title}</h5>
                                 <p class="card-text">${movie.genre} - ${movie.type} - ${movie.year}</p>
@@ -371,7 +436,16 @@
         document.getElementById("yearFilter").addEventListener("change", filterMovies);
         // Mostrar todas las películas al cargar
         displayMovies(movies);
+
+        /*para el boton inicio*/
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     </script>
+       <button class="boton-inicio" onclick="scrollToTop()">
+        ⬆ <span>Inicio - </span>
+        <span>Para Pedir da clic en el icono de WhatsApp</span>
+    </button>
 
 </body>
 
