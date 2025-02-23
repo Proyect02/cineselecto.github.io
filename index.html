@@ -133,6 +133,8 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
     cursor: pointer;
     animation: rebote 1.5s infinite ease-in-out; /* Se repite constantemente */
+    pointer-events: auto; /* Asegura que el evento se capture correctamente */
+    cursor: pointer;      /* Mejora la experiencia visual */
 }
 
 /* Efecto de radiación (brillo pulsante) */
@@ -178,13 +180,41 @@
                 margin-bottom: 10px;
             }
         }
+
+        .modal-trigger {
+            cursor: pointer; 
+            position: relative;
+            display: inline-block;
+        }
+
+        .whatsapp-text {
+            color: red;
+            font-style: italic;
+        }
+
+/*inmovilizar barra*/       
+.fixed-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;  /* o el color que desees */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  /* solo si quieres sombra */
+}
+
+.main-content {
+  padding-top: 60px;  /* Ajusta esto según la altura de tu barra fija */
+}
+
+
     </style>
 </head>
 
 <body>
 
     <!-- Menú Superior -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Películas y Series a $10 PIDELAS dando 👉🏻 clic en el icono de WhatsApp</a>
             <input type="text" id="searchInput" class="form-control ms-auto" placeholder="Buscar película...">
@@ -192,7 +222,7 @@
     </nav>
 
     <!-- Contenedor de filtros -->
-    <div class="container filter-container">
+    <div class="container filter-container main-content">
         <div class="row">
             <div class="col-md-3">
                 <select class="form-select" id="genreFilter">
@@ -242,6 +272,7 @@
                 <div class="modal-body">
                     <img id="modalImage" class="img-fluid" src="" alt="">
                     <p id="modalDescription"></p>
+                   <strong> <p id="modalDetails"></p> <strong></strong>
                     <a id="whatsappShare" class="btn btn-success" href="" target="_blank">
                         Pedir por WhatsApp
                     </a>
@@ -371,18 +402,27 @@
         function displayMovies(moviesList) {
             const movieContainer = document.getElementById("movieContainer");
             movieContainer.innerHTML = ""; // Limpiar películas existentes
+            
             moviesList.forEach(movie => {
                 const movieCard = `
                     <div class="col-md-3">
-                        <div class="card movie-card" data-bs-toggle="modal" data-bs-target="#movieModal" onclick="showMovieDetails('${movie.title}')">
-                            <img src="${movie.imageUrl}" class="card-img-top" alt="${movie.title}">
+                        <div class="card movie-card">
+                            <!-- Aquí está la imagen principal envuelta en un div -->
+                            <div class="modal-trigger" data-bs-toggle="modal" data-bs-target="#movieModal" onclick="showMovieDetails('${movie.title}')">
+                                <img src="${movie.imageUrl}" class="card-img-top" alt="${movie.title}">
+                            </div>
+                            
+                            <!-- Botón de WhatsApp separado -->
                             <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" 
                             class="whatsapp-button" 
                             onclick="shareOnWhatsApp(event, '${movie.title}')"
-                            alt="WhatsApp">                            
+                            alt="WhatsApp">
+                            
+                            <span class="whatsapp-text">Pedir en el icono de WhatsApp</span>
+                            
                             <div class="card-body">
-                                <h5 class="card-title">${movie.title}</h5>
-                                <p class="card-text">${movie.genre} - ${movie.type} - ${movie.year}</p>
+                                <h5 class="card-title">${movie.title} - ${movie.year}</h5>
+                                
                             </div>
                         </div>
                     </div>
@@ -390,6 +430,7 @@
                 movieContainer.innerHTML += movieCard;
             });
         }
+
 
         function filterMovies() {
             const searchText = document.getElementById("searchInput").value.toLowerCase();
@@ -415,19 +456,37 @@
             document.getElementById("modalImage").src = movie.imageUrl;
             document.getElementById("modalDescription").textContent = movie.description;
 
+            document.getElementById("modalDetails").textContent = `${movie.genre} / ${movie.type} / ${movie.year}`;
+
             // Crear el enlace para compartir en WhatsApp en el modal
             const whatsappLink = `https://wa.me/2201362136?text=Me%20interesa%20esta%20película%2C%20¿puedes%20darme%20más%20información%20sobre%20${movie.title}%20por%20favor%20?%20`;
             document.getElementById("whatsappShare").href = whatsappLink;
         }
 
-        // Función para compartir en WhatsApp desde la tarjeta
         function shareOnWhatsApp(event, title) {
-            event.stopPropagation(); // Evita que se abra el modal al hacer clic en el botón de WhatsApp
+            event.preventDefault();
+            event.stopPropagation();
+
+            // Asegurar que no se active el modal al hacer clic en WhatsApp
+            const card = event.target.closest(".movie-card");
+            if (card) {
+                card.removeAttribute("data-bs-toggle");
+                card.removeAttribute("data-bs-target");
+            }
+
             const movie = movies.find(movie => movie.title === title);
             const whatsappLink = `https://wa.me/2201362136?text=Me%20interesa%20esta%20película%2C%20¿puedes%20darme%20más%20información%20sobre%20${movie.title}%20por%20favor%20?%20`;
+            
             window.open(whatsappLink, '_blank');
-        }
 
+            // Volver a agregar los atributos después de un pequeño retraso
+            setTimeout(() => {
+                if (card) {
+                    card.setAttribute("data-bs-toggle", "modal");
+                    card.setAttribute("data-bs-target", "#movieModal");
+                }
+            }, 500);
+        }
 
         document.getElementById("searchInput").addEventListener("input", filterMovies);
         document.getElementById("genreFilter").addEventListener("change", filterMovies);
