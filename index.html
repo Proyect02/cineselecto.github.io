@@ -34,9 +34,7 @@
         .boton-inicio span {
             margin-left: 8px;
         }
-/*style boton inicio*/
-
-   
+/*style boton inicio*/   
    .fixed-search {
     position: fixed;
     top: 0;
@@ -84,10 +82,6 @@
         .movie-card:hover img {
             transform: scale(1.1);
         }
-
-
-
-
 /* Contenedor de la imagen con posición relativa */
 
 /* ********************************************************* */
@@ -96,7 +90,6 @@
     position: relative;
     overflow: hidden;
 }
-
 /*---------------------- whats app icono antes de mod-----------------------------------------*/
 /* Efecto de brillo y rebote */
 @keyframes rebote {
@@ -152,13 +145,7 @@
     transform: scale(1.2);
 }
 
-
-
 /* ************************** */
-
-
-
-
         /* Estilo para el contenedor de filtros */
         .filter-container {
             margin-top: 20px;
@@ -206,13 +193,10 @@
 .main-content {
   padding-top: 60px;  /* Ajusta esto según la altura de tu barra fija */
 }
-
-
     </style>
 </head>
-
+    
 <body>
-
     <!-- Menú Superior -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-navbar">
         <div class="container-fluid">
@@ -228,9 +212,11 @@
                 <select class="form-select" id="genreFilter">
                     <option value="">Filtrar por Género</option>
                     <option value="Acción">Acción</option>
+                    <option value="Terror">Terror</option>
                     <option value="Comedia">Comedia</option>
                     <option value="Drama">Drama</option>
                     <option value="Suspenso">Suspenso</option>
+                    <option value="Animada">Animada</option>    
                 </select>
             </div>
             <div class="col-md-3">
@@ -240,6 +226,7 @@
                     <option value="Serie">Serie</option>
                     <option value="Documental">Documental</option>
                     <option value="Anime">Anime</option>
+                    <option value="Infantil">Infantil</option>
                 </select>
             </div>
             <div class="col-md-3">
@@ -288,23 +275,39 @@
     <script>
         // Lista de películas simuladas con título, género, tipo, año, URL de imagen y descripción
         const movies = [
-            {
+        {
+                "title": "Las aventuras de Dog Man",
+                "genre": "Animada",
+                "type": "Infantil",
+                "year": "2025", 
+                "imageUrl": "https://i.ibb.co/F4RrG4px/PORTADA.jpg",
+                "description": "Cuando un fiel perro policía y su dueño, un policía humano, se lesionan juntos en el trabajo, una cirugía descabellada que les salva la vida los une y nace Dog Man, quien ha jurado proteger y servir..."
+        },
+        {
+                "title": "Mi Villano Favorito 4",
+                "genre": "Animada",
+                "type": "Infantil",
+                "year": "2024",
+                "imageUrl": "https://i.ibb.co/QFSpLdXz/portada-subir.png",
+                "description": "Gru, Lucy, sus tres niñas, Gru Jr. y los minions adoptan nuevas identidades secretas para ocultarse del supervillano Maxime Le Mal, un antiguo compañero de Gru que busca vengarse de él."
+        },
+        {
                 "title": "El Maravilloso Mago De Oz",
                 "genre": "Acción, Aventura",
                 "type": "Película",
                 "year": "2025",
                 "imageUrl": "https://i.ibb.co/YFBXRyBS/portada.jpg",
                 "description": "Ellie vive en una ciudad lejana. Un día, la malvada bruja Gingema conjuró un huracán que llevó a Ellie y su perro Toto al país de los Munchkins."
-            },
-            {
+        },
+        {
                 "title": "Gladiador II",
                 "genre": "Acción, Aventura, Drama",
                 "type": "Película",
                 "year": "2024",
                 "imageUrl": "https://pics.filmaffinity.com/gladiator_ii-808387712-large.jpg",
                 "description": "Años después de presenciar la muerte del venerado héroe Maximus a manos de su tío, Lucius se ve obligado a ingresar al Coliseo después de que su hogar fuera conquistado por los emperadores tiránicos que ahora dirigen Roma con mano de hierro. Con rabia en su corazón y el futuro del Imperio en juego, Lucius debe mirar a su pasado para encontrar fuerza y ​​honor para devolver la gloria de Roma a su pueblo."
-            },
-             {
+        },
+        {
                 "title": "Compañera Perfecta",
                 "genre": "Terror",
                 "type": "Película",
@@ -416,9 +419,7 @@
             "year": "2024",
             "imageUrl": "https://i.ibb.co/5X5LMktg/FAROL.jpg",
             "description": "Tras naufragar, una joven marinera es rescatada por un farero solitario, pero pronto descubre que algo siniestro acecha en la isla."
-        }
-        
-
+        }    
 
         ];
 
@@ -455,7 +456,6 @@
             });
         }
 
-
         function filterMovies() {
             const searchText = document.getElementById("searchInput").value.toLowerCase();
             const genreFilter = document.getElementById("genreFilter").value;
@@ -471,8 +471,6 @@
 
             displayMovies(filteredMovies);
         }
-
-
         // Función para mostrar detalles de la película en el modal
         function showMovieDetails(title) {
             const movie = movies.find(movie => movie.title === title);
@@ -511,7 +509,6 @@
                 }
             }, 500);
         }
-
         document.getElementById("searchInput").addEventListener("input", filterMovies);
         document.getElementById("genreFilter").addEventListener("change", filterMovies);
         document.getElementById("typeFilter").addEventListener("change", filterMovies);
@@ -528,7 +525,5 @@
         ⬆ <span>Inicio - </span>
         <span>Para Pedir da clic en el icono de WhatsApp</span>
     </button>
-
 </body>
-
 </html>
